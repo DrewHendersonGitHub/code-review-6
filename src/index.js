@@ -18,17 +18,18 @@ function displayError(error) {
 $(document).ready(function() {
   $('#convert').click(function() {
     let base = $('#base').val();
+    console.log(process.env.API_KEY);
     let amount = $('#amount').val();
     let newCurrency = $('#new-currency').val();
     ConvertService.convert(base.toUpperCase())
-    .then(function(convertResponse) {
-      if (convertResponse instanceof Error) {
-        throw Error(`ExchangeRate-API error: ${convertResponse.message}`);
-      }
-      displayResults(convertResponse, base.toUpperCase(), newCurrency.toUpperCase(), amount);
-    })
-    .catch(function(error) {
-      displayError(error.message);
-    });
+      .then(function(convertResponse) {
+        if (convertResponse instanceof Error) {
+          throw Error(`ExchangeRate-API error: ${convertResponse.message}`);
+        }
+        $('#show-results').html(displayResults(convertResponse, base.toUpperCase(), newCurrency.toUpperCase(), amount));
+      })
+      .catch(function(error) {
+        $('show-errors').html(displayError(error.message));
+      });
   });
 });
