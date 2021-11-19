@@ -12,10 +12,18 @@
     <h1>Currency Exchanger</h1>
     <div class="row">
       <div class="col-6">
-        <h2>Convert From:</h2>
+        <span>
+          <h2>Convert From:</h2>
+          <label for="base">base</label>
+          <input id="base" type="text" placeholder="USD">
+          <label for="amount">amount</label>
+          <input id="amount" type="text" placeholder="7">
+        </span>
       </div>
       <div class="col-6">
         <h2>Convert To:</h2>
+        <label for="new-currency">new</label>
+        <input id="new-currency" type="text" placeholder="USD">
       </div>
     </div>
     <div id="button-info" class="buttons">

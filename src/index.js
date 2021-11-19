@@ -17,6 +17,9 @@ function displayError(error) {
 
 $(document).ready(function() {
   $('#convert').click(function() {
+    let base = $('#base').val();
+    let amount = $('#amount').val();
+    let newCurrency = $('#new-currency').val();
     ConvertService.convert(base.toUpperCase())
     .then(function(convertResponse) {
       if (convertResponse instanceof Error) {
