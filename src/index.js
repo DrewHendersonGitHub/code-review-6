@@ -6,9 +6,9 @@ import ConvertService from './convert.js';
 
 function displayResults(response, base, newCurrency, amount) {
   if (response.conversion_rates[newCurrency]) {
-    return `<p>${amount} ${base} is equal to ${response.conversion_rates[newCurrency] * amount} ${newCurrency}.</p>`;
+    return `<h3>${amount} ${base} is equal to ${response.conversion_rates[newCurrency] * amount} ${newCurrency}.</h3>`;
   }
-  return `<p>${newCurrency} not found.</p>`;
+  return `<h3>${newCurrency} not found.</h3>`;
 }
 
 function displayError(error) {
@@ -17,16 +17,15 @@ function displayError(error) {
 
 $(document).ready(function() {
   $('#convert').click(function() {
-    let base = $('#base').val();
-    console.log(process.env.API_KEY);
+    let base = $('#base').val().toUpperCase();
     let amount = $('#amount').val();
-    let newCurrency = $('#new-currency').val();
+    let newCurrency = $('#new-currency').val().toUpperCase();
     ConvertService.convert(base.toUpperCase())
       .then(function(convertResponse) {
         if (convertResponse instanceof Error) {
           throw Error(`ExchangeRate-API error: ${convertResponse.message}`);
         }
-        $('#show-results').html(displayResults(convertResponse, base.toUpperCase(), newCurrency.toUpperCase(), amount));
+        $('#show-results').html(displayResults(convertResponse, base, newCurrency, amount));
       })
       .catch(function(error) {
         $('show-errors').html(displayError(error.message));
