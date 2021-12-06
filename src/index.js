@@ -11,24 +11,22 @@ function displayResults(response, base, newCurrency, amount) {
   return `<h3>${newCurrency} not found.</h3>`;
 }
 
-function displayError(error) {
-  $('show-errors').text(`${error}`);
-}
-
 $(document).ready(function() {
   $('#convert').click(function() {
     let base = $('#base').val().toUpperCase();
     let amount = $('#amount').val();
     let newCurrency = $('#new-currency').val().toUpperCase();
-    ConvertService.convert(base.toUpperCase())
+    ConvertService.convert(base)
       .then(function(convertResponse) {
         if (convertResponse instanceof Error) {
           throw Error(`ExchangeRate-API error: ${convertResponse.message}`);
         }
         $('#show-results').html(displayResults(convertResponse, base, newCurrency, amount));
+        $('#show-errors').html(``);
       })
       .catch(function(error) {
-        $('show-errors').html(displayError(error.message));
+        $('#show-errors').html(`<h3>${error.message}</h3>`);
+        $('#show-results').html(``);
       });
   });
 });
